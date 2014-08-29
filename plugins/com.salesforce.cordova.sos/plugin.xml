@@ -1,0 +1,25 @@
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+           id="com.salesforce.cordova.sos"
+      version="0.0.1">
+
+        <name>S.O.S.</name>
+        <description>Salesforce SOS</description>
+        <license>Apache 2.0</license>
+        <keywords>cordova,sos,salesforce,video</keywords>
+
+
+        <platform name="ios">
+            <js-module src="www/sos.js" name="sos">
+                <clobbers target="window.sos" />
+            </js-module>
+
+            <config-file target="config.xml" parent="/*">
+                <feature name="SOS">
+                    <param name="ios-package" value="SalesforceSOS"/>
+                </feature>
+            </config-file>
+            <header-file src="src/ios/SalesforceSOS.h" />
+            <source-file src="src/ios/SalesforceSOS.m" />
+            <framework src="SOS.framework" />
+        </platform>
+    </plugin>
