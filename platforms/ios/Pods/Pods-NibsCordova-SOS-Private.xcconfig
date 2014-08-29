@@ -1,0 +1,6 @@
+#include "Pods-NibsCordova-SOS.xcconfig"
+FRAMEWORK_SEARCH_PATHS = ${PODS_NIBSCORDOVA_SOS_FRAMEWORK_SEARCH_PATHS}
+GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/SOS" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/EngineIOClient" "${PODS_ROOT}/Headers/GoInstant" "${PODS_ROOT}/Headers/MBProgressHUD" "${PODS_ROOT}/Headers/OpenTok" "${PODS_ROOT}/Headers/Raven" "${PODS_ROOT}/Headers/SOS" "${PODS_ROOT}/Headers/SocketRocket"
+OTHER_LDFLAGS = -ObjC ${PODS_NIBSCORDOVA_SOS_OTHER_LDFLAGS}
+PODS_ROOT = ${SRCROOT}

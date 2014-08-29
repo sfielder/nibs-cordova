@@ -1,0 +1,2 @@
+PODS_NIBSCORDOVA_ENGINEIOCLIENT_FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/EngineIOClient/"
+PODS_NIBSCORDOVA_ENGINEIOCLIENT_OTHER_LDFLAGS = -licucore -framework CFNetwork -framework EngineIOClient -framework Security

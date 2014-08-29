@@ -1,0 +1,28 @@
+PODS:
+  - EngineIOClient (0.3.1-binary):
+    - SocketRocket (= 0.3.1-beta2)
+  - GoInstant (0.3.1-binary):
+    - EngineIOClient (= 0.3.1-binary)
+  - MBProgressHUD (0.8)
+  - OpenTok (2.2.0)
+  - Raven (0.3.0)
+  - SocketRocket (0.3.1-beta2)
+  - SOS (0.4.9):
+    - GoInstant (= 0.3.1-binary)
+    - MBProgressHUD (= 0.8)
+    - OpenTok (= 2.2.0)
+    - Raven (= 0.3.0)
+
+DEPENDENCIES:
+  - SOS (= 0.4.9)
+
+SPEC CHECKSUMS:
+  EngineIOClient: 79d46af27a63e9e214c907d5721dc8c110ec12e7
+  GoInstant: befc667789159c41678b7f68cd1128529f522c05
+  MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
+  OpenTok: df627366169eed06c06601fa8c42b097c2bbdbff
+  Raven: ae464df6d875b64d2b2c7ccfad28622974507b0a
+  SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304
+  SOS: 77cb3cbd861f8cde3ae8922498ea19a268c653aa
+
+COCOAPODS: 0.33.1

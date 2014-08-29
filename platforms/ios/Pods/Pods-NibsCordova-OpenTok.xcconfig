@@ -1,0 +1,2 @@
+PODS_NIBSCORDOVA_OPENTOK_FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/OpenTok/"
+PODS_NIBSCORDOVA_OPENTOK_OTHER_LDFLAGS = -lsqlite3.0 -lstdc++.6 -lxml2.2 -lz -framework AVFoundation -framework AudioToolbox -framework CFNetwork -framework CoreAudio -framework CoreMedia -framework CoreTelephony -framework CoreVideo -framework MobileCoreServices -framework OpenGLES -framework Opentok -framework QuartzCore -framework Security -framework SystemConfiguration -framework UIKit

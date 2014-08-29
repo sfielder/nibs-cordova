@@ -1,0 +1,1 @@
+../../GoInstant/GoInstant.framework/Versions/A/Headers/GIChannel.h
