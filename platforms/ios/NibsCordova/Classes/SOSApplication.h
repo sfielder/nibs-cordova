@@ -42,6 +42,7 @@
 @interface SOSApplication : NSObject
 
 - (SOSOptions *)getSessionOptions;
+@property (nonatomic, strong) NSString* email;
 
 /**
  *  Provides a singleton instance to the SOS Application

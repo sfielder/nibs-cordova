@@ -10,10 +10,34 @@
                     "CoreGraphics.framework": [
                         {
                             "xml": "false",
-                            "count": 1
+                            "count": 3
                         }
                     ],
                     "SOS.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "ImageIO.framework": [
+                        {
+                            "xml": "true",
+                            "count": 1
+                        }
+                    ],
+                    "CoreLocation.framework": [
+                        {
+                            "xml": "false",
+                            "count": 2
+                        }
+                    ],
+                    "AssetsLibrary.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "MobileCoreServices.framework": [
                         {
                             "xml": "false",
                             "count": 1
@@ -31,6 +55,22 @@
                         {
                             "xml": "<feature name=\"SOS\"><param name=\"ios-package\" value=\"SalesforceSOS\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -42,6 +82,18 @@
             "PACKAGE_NAME": "com.salesforce.nibs"
         },
         "com.salesforce.cordova.sos": {
+            "PACKAGE_NAME": "com.salesforce.nibs"
+        },
+        "org.apache.cordova.device": {
+            "PACKAGE_NAME": "com.salesforce.nibs"
+        },
+        "org.apache.cordova.console": {
+            "PACKAGE_NAME": "com.salesforce.nibs"
+        },
+        "org.apache.cordova.camera": {
+            "PACKAGE_NAME": "com.salesforce.nibs"
+        },
+        "org.apache.cordova.geolocation": {
             "PACKAGE_NAME": "com.salesforce.nibs"
         }
     },

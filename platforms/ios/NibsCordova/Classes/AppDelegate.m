@@ -89,7 +89,14 @@
     // NOTE: To customize the view's frame size (which defaults to full screen), override
     // [self.viewController viewWillAppear:] in your view controller.
 
-    SOSContainerViewController *sosRoot = [[SOSContainerViewController alloc] initWithViewController:self.viewController];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+    
+    navController.navigationBarHidden = YES;
+    
+    [application setStatusBarHidden:NO];
+    
+    SOSContainerViewController *sosRoot = [[SOSContainerViewController alloc] initWithViewController:navController];
+    
     self.window.rootViewController = sosRoot;
     
     [self.window makeKeyAndVisible];

@@ -40,6 +40,8 @@
  */
 @implementation SOSApplication
 
+@synthesize email;
+
 /**
  *  In the first example we we're doing a basic integration with no customization.
  *  Here we will be modifying the language presented to the user for various popups, and changing the look of the line drawing.
@@ -51,13 +53,15 @@
   SOSUIComponents *components = [sos uiComponents];
   SOSScreenAnnotations *annotations = [sos annotations];
 
-  [components setAlertTitle:@"Example 2."]; // Sets the title used for UI Alerts.
-  [components setConnectMessage:@"This is the alert customers see when starting SOS"];
-  [components setDisconnectMessage:@"This is the alert customers see when a user attempts to end a session"];
-  [components setAgentDisconnectMessage:@"This is the alert customers see when the agent ends the session"];
+  self.email = @"tester@example.com";
+    
+  [components setAlertTitle:@"Live Video Chat"]; // Sets the title used for UI Alerts.
+  [components setConnectMessage:@"Talk to a Nibs Chocolatier now"];
+  [components setDisconnectMessage:@"Thanks for trying video chat"];
+  [components setAgentDisconnectMessage:@"Thank you"];
 
-  [components setConnectionRetryMessage:@"The user has been waiting in the queue, they will be asked to continue/quit here"];
-  [components setConnectionTimedOutMessage:@"The session has gone unanswered too long, it has been automatically ended"];
+  [components setConnectionRetryMessage:@"Would you still like to view chat with a Nibs Chocolatier?"];
+  [components setConnectionTimedOutMessage:@"We're sorry, all of our Chocolatiers are busy right now"];
   
   [annotations setLineWidth:18.f]; // this changes the width of the line drawn by the agent
   [annotations setLineColor:[UIColor magentaColor]]; // this changes the color of the line drawn by the agent
@@ -75,7 +79,7 @@
   NSDictionary *settings = [[NSDictionary alloc] initWithContentsOfFile:path];
   SOSOptions *opts = [SOSOptions optionsWithAccount:settings[@"Account"]
                                         application:settings[@"Application"]
-                                              email:settings[@"Email"]];
+                                              email:self.email];
 
   [opts setSessionRetryTime:10 * 1000]; // Set the retry prompt for 10 seconds (10,000 ms)
   [opts setSessionExpireTime:60 * 1000]; // Have the request automatically end after 60 seconds.

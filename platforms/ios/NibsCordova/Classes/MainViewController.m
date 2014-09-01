@@ -67,8 +67,21 @@
 {
     // View defaults to full size.  If you want to customize the view's size, or its subviews (e.g. webView),
     // you can do so here.
-
+    
     [super viewWillAppear:animated];
+    self.webView.scrollView.delegate = self;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.webView.scrollView setContentOffset:CGPointMake(0, 0)];
+    });
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView.contentOffset.y != 0) {
+        scrollView.contentOffset = CGPointMake(0, 0);
+    }
 }
 
 - (void)viewDidLoad
