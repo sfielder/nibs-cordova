@@ -29,6 +29,7 @@ angular.module('nibs.profile', ['ngResource', 'nibs.s3uploader', 'nibs.config', 
 
     // Resources
     .factory('User', function ($resource, HOST) {
+        console.log('****' + HOST);
         return $resource(HOST + 'users/me', null, {
                 'get':      {method:'GET'},
                 'update':   {method:'PUT'}}

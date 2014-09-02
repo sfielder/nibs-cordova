@@ -1,4 +1,4 @@
-var app = angular.module('nibs', ['ionic', 'ngResource', 'openfb', 'nibs.config', 'nibs.profile', 'nibs.auth', 'nibs.product', 'nibs.offer', 'nibs.store-locator', 'nibs.gallery', 'nibs.settings', 'nibs.case', 'nibs.message'])
+var app = angular.module('nibs', ['ionic', 'openfb', 'nibs.config', 'nibs.profile', 'nibs.auth', 'nibs.product', 'nibs.offer', 'nibs.store-locator', 'nibs.gallery', 'nibs.settings', 'nibs.case', 'nibs.message','nibs.chatter'])
 
     .run(function ($window, $location, $rootScope, $state, $ionicPlatform, $http, OpenFB, FB_APP_ID, HOST) {
 
@@ -17,7 +17,6 @@ var app = angular.module('nibs', ['ionic', 'ngResource', 'openfb', 'nibs.config'
             if (ETPush) {
 
                 function onMessage(payload) {
-                    console.log('*********** got notification!!!!');
                     console.log(payload);
                     alert('got message: ' + JSON.stringify(payload));
                 }

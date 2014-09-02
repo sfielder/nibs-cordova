@@ -25,7 +25,7 @@ angular.module('nibs.case', ['ngResource', 'nibs.config'])
     })
 
     //Controllers
-    .controller('CaseCtrl', function ($scope, $window, $ionicPopup, Case) {
+    .controller('CaseCtrl', function ($scope, $window, $ionicPopup, Case, User) {
 
         $scope.case = new Case();
 
@@ -35,4 +35,11 @@ angular.module('nibs.case', ['ngResource', 'nibs.config'])
             });
         };
 
+        $scope.sos = function() {
+            User.get(function(user) {
+                alert(JSON.stringify(user));
+                // Available via SOS cordova plugin
+                window.SalesforceSOS(user.email);
+            });
+        }
     });
