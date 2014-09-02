@@ -42,6 +42,12 @@
                             "xml": "false",
                             "count": 1
                         }
+                    ],
+                    "libsqlite3.dylib": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
                     ]
                 }
             },
@@ -71,6 +77,20 @@
                         {
                             "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ETPush\"><param name=\"ios-package\" value=\"ETSdkWrapper\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Info.plist": {
+                "parents": {
+                    "ETAppSettings": [
+                        {
+                            "xml": "<dict><key>ApplicationID-Dev</key><string>3ca982b5-d6b6-49c2-adbb-e48cbfad45b6</string><key>AccessToken-Dev</key><string>4mq77s25n9bber2jth7t9d9a</string><key>ApplicationID-Prod</key><string>407dfa8f-27b9-462c-9bd1-ee105a7668d3</string><key>AccessToken-Prod</key><string>6tmhn6crj6wfhnruej55rsr2</string><key>UseGeofences</key><string>true</string><key>UseAnalytics</key><string>true</string></dict>",
+                            "count": 1
                         }
                     ]
                 }
@@ -94,6 +114,17 @@
             "PACKAGE_NAME": "com.salesforce.nibs"
         },
         "org.apache.cordova.geolocation": {
+            "PACKAGE_NAME": "com.salesforce.nibs"
+        },
+        "com.exacttarget.etpushsdk": {
+            "DEVAPPID": "3ca982b5-d6b6-49c2-adbb-e48cbfad45b6",
+            "DEVACCESSTOKEN": "4mq77s25n9bber2jth7t9d9a",
+            "PRODAPPID": "407dfa8f-27b9-462c-9bd1-ee105a7668d3",
+            "PRODACCESSTOKEN": "6tmhn6crj6wfhnruej55rsr2",
+            "GCMSENDERIDDEV": "123456",
+            "GCMSENDERIDPROD": "123456",
+            "USEGEO": "true",
+            "USEANALYTICS": "true",
             "PACKAGE_NAME": "com.salesforce.nibs"
         }
     },

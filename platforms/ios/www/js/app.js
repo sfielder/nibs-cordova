@@ -1,16 +1,58 @@
-angular.module('nibs', ['ionic', 'openfb', 'nibs.config', 'nibs.profile', 'nibs.auth', 'nibs.product', 'nibs.offer', 'nibs.store-locator', 'nibs.gallery', 'nibs.settings', 'nibs.case', 'nibs.message','nibs.chatter'])
+var app = angular.module('nibs', ['ionic', 'ngResource', 'openfb', 'nibs.config', 'nibs.profile', 'nibs.auth', 'nibs.product', 'nibs.offer', 'nibs.store-locator', 'nibs.gallery', 'nibs.settings', 'nibs.case', 'nibs.message'])
 
-    .run(function ($window, $location, $rootScope, $state, $ionicPlatform, OpenFB, FB_APP_ID, HOST) {
+    .run(function ($window, $location, $rootScope, $state, $ionicPlatform, $http, OpenFB, FB_APP_ID, HOST) {
+
+        var user = JSON.parse($window.localStorage.getItem('user'));
+
+        $rootScope.user = user;
+
+        // Intialize OpenFB Facebook library
         OpenFB.init(FB_APP_ID, HOST + '/oauthcallback.html', $window.localStorage);
 
         $ionicPlatform.ready(function() {
             if(window.StatusBar) {
                 StatusBar.styleDefault();
             }
+
+            if (ETPush) {
+
+                function onMessage(payload) {
+                    console.log('*********** got notification!!!!');
+                    console.log(payload);
+                    alert('got message: ' + JSON.stringify(payload));
+                }
+
+                ETPush.registerForNotifications(
+                    function() {
+                        console.log('registerForNotifications: success');
+                    },
+                    function(error) {
+                        alert('Error registering for Push Notification');
+                        console.log('registerForNotifications: error - ' + JSON.stringify(error));
+                    },
+                    "onNotification"
+                );
+
+                ETPush.resetBadgeCount();
+
+                if (user && user.email) {
+                    console.log('Subscribing for Push as ' + user.email);
+                    ETPush.setSubscriberKey(
+                        function() {
+                            console.log('setSubscriberKey: success');
+                        },
+                        function(error) {
+                            alert('Error setting Push Notification subscriber');
+                        },
+                        user.email
+                    );
+                }
+
+            }
+
         });
 
-        $rootScope.user = JSON.parse($window.localStorage.getItem('user'));
-
+        // Re-route to welcome street if we don't have an authenticated token
         $rootScope.$on('$stateChangeStart', function(event, toState) {
             if (toState.name !== 'app.login' && toState.name !== 'app.signup' && toState.name !== 'app.welcome' && toState.name !== 'app.logout' && !$window.localStorage.getItem('token')) {
                 console.log('Aborting state ' + toState.name + ': No token');

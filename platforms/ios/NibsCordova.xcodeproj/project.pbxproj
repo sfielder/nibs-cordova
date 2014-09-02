@@ -51,6 +51,9 @@
 		2B15CC0D9B0B47D99D1378C9 /* CDVJpegHeaderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = BE782CF7377541A796E0706D /* CDVJpegHeaderWriter.m */; };
 		3FF5917DB8B04C5984035C41 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 792F529F03884CBC991D1230 /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D6511BE3E4F94CE8937EFBC4 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = E14EF2193C714B9889946F7D /* CDVLocation.m */; };
+		B4B0C14002744FDFB823E76E /* ETSdkWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93658D2D70FC432781B3BFB9 /* ETSdkWrapper.m */; };
+		44703B6AFB8A4F81995CED48 /* libetpushsdk-3.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 836FC05D7A564A53B040DC40 /* libetpushsdk-3.1.1.a */; };
+		5B0A3185B5404777997860E9 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 368E1B0BEC58411590AB25E2 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +148,27 @@
 		792F529F03884CBC991D1230 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "ImageIO.framework"; path = "System/Library/Frameworks/ImageIO.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 		E14EF2193C714B9889946F7D /* CDVLocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVLocation.m"; path = "org.apache.cordova.geolocation/CDVLocation.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		529A83E0AE684F2B96D8B6F5 /* CDVLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVLocation.h"; path = "org.apache.cordova.geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		93658D2D70FC432781B3BFB9 /* ETSdkWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ETSdkWrapper.m"; path = "com.exacttarget.etpushsdk/ETSdkWrapper.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		836FC05D7A564A53B040DC40 /* libetpushsdk-3.1.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libetpushsdk-3.1.1.a"; path = "NibsCordova/Plugins/com.exacttarget.etpushsdk/libetpushsdk-3.1.1.a"; sourceTree = "<group>"; fileEncoding = 4; };
+		3344486111EF45F8A0EBD27F /* ETSdkWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ETSdkWrapper.h"; path = "com.exacttarget.etpushsdk/ETSdkWrapper.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		7F56979E916346C8A2464117 /* ETLandingPagePresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ETLandingPagePresenter.h"; path = "com.exacttarget.etpushsdk/ETLandingPagePresenter.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		A8DC5256DD774F25AADE80E0 /* ETLocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ETLocationManager.h"; path = "com.exacttarget.etpushsdk/ETLocationManager.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		2EC480C48C1D489E893AB227 /* ETPhoneHome.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ETPhoneHome.h"; path = "com.exacttarget.etpushsdk/ETPhoneHome.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		41B084E27BFC44F9A666D13F /* ETPush.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ETPush.h"; path = "com.exacttarget.etpushsdk/ETPush.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		8C87A1DD7D13465489FDB4F0 /* ETSqliteHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ETSqliteHelper.h"; path = "com.exacttarget.etpushsdk/ETSqliteHelper.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		99C9E8E461874F908AAE9226 /* ETURLConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ETURLConnection.h"; path = "com.exacttarget.etpushsdk/ETURLConnection.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		723C2CC8E6B24CE0926A2386 /* ExactTargetEnhancedPushDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ExactTargetEnhancedPushDataSource.h"; path = "com.exacttarget.etpushsdk/ExactTargetEnhancedPushDataSource.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		32CDCA341556492B96B3D3B3 /* FenceMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "FenceMessage.h"; path = "com.exacttarget.etpushsdk/FenceMessage.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		3E490331168248C39B828E95 /* GenericUpdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "GenericUpdate.h"; path = "com.exacttarget.etpushsdk/GenericUpdate.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		9916491039A1409B8352623E /* Geofence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Geofence.h"; path = "com.exacttarget.etpushsdk/Geofence.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		7C1AE85C036C40DDB2EBFA22 /* KeyValueStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "KeyValueStore.h"; path = "com.exacttarget.etpushsdk/KeyValueStore.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		4B8235F5E79344EDB02E1ED6 /* LocationUpdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "LocationUpdate.h"; path = "com.exacttarget.etpushsdk/LocationUpdate.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		61F09F2D63174A0186712F28 /* Message.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Message.h"; path = "com.exacttarget.etpushsdk/Message.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		772C16DD04F94F1B8C519677 /* PushConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PushConstants.h"; path = "com.exacttarget.etpushsdk/PushConstants.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		8121DA48CE2B4F6BB5773ADB /* Region.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Region.h"; path = "com.exacttarget.etpushsdk/Region.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		53D02C617EB341A5B444664D /* Registration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Registration.h"; path = "com.exacttarget.etpushsdk/Registration.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		A0576D6CDB334E7BAC5B852C /* StatsUpdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "StatsUpdate.h"; path = "com.exacttarget.etpushsdk/StatsUpdate.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		368E1B0BEC58411590AB25E2 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsqlite3.dylib"; path = "usr/lib/libsqlite3.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +185,8 @@
 				682F2182804040B2974B0847 /* libPods-NibsCordova.a in Frameworks */,
 				B7739E4928D44A98AFFAE387 /* SOS.framework in Frameworks */,
 				3FF5917DB8B04C5984035C41 /* ImageIO.framework in Frameworks */,
+				44703B6AFB8A4F81995CED48 /* libetpushsdk-3.1.1.a in Frameworks */,
+				5B0A3185B5404777997860E9 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +295,8 @@
 				F8EB88D70A1943FFA06D287F /* libPods-NibsCordova.a */,
 				741B367E2EAE44EEB4DD2703 /* SOS.framework */,
 				792F529F03884CBC991D1230 /* ImageIO.framework */,
+				836FC05D7A564A53B040DC40 /* libetpushsdk-3.1.1.a */,
+				368E1B0BEC58411590AB25E2 /* libsqlite3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -299,6 +327,25 @@
 				E4A85276B5804DC0BE03B247 /* CDVExif.h */,
 				E14EF2193C714B9889946F7D /* CDVLocation.m */,
 				529A83E0AE684F2B96D8B6F5 /* CDVLocation.h */,
+				93658D2D70FC432781B3BFB9 /* ETSdkWrapper.m */,
+				3344486111EF45F8A0EBD27F /* ETSdkWrapper.h */,
+				7F56979E916346C8A2464117 /* ETLandingPagePresenter.h */,
+				A8DC5256DD774F25AADE80E0 /* ETLocationManager.h */,
+				2EC480C48C1D489E893AB227 /* ETPhoneHome.h */,
+				41B084E27BFC44F9A666D13F /* ETPush.h */,
+				8C87A1DD7D13465489FDB4F0 /* ETSqliteHelper.h */,
+				99C9E8E461874F908AAE9226 /* ETURLConnection.h */,
+				723C2CC8E6B24CE0926A2386 /* ExactTargetEnhancedPushDataSource.h */,
+				32CDCA341556492B96B3D3B3 /* FenceMessage.h */,
+				3E490331168248C39B828E95 /* GenericUpdate.h */,
+				9916491039A1409B8352623E /* Geofence.h */,
+				7C1AE85C036C40DDB2EBFA22 /* KeyValueStore.h */,
+				4B8235F5E79344EDB02E1ED6 /* LocationUpdate.h */,
+				61F09F2D63174A0186712F28 /* Message.h */,
+				772C16DD04F94F1B8C519677 /* PushConstants.h */,
+				8121DA48CE2B4F6BB5773ADB /* Region.h */,
+				53D02C617EB341A5B444664D /* Registration.h */,
+				A0576D6CDB334E7BAC5B852C /* StatsUpdate.h */,
 			);
 			name = Plugins;
 			path = NibsCordova/Plugins;
@@ -534,6 +581,7 @@
 				8E3B9FF2A72B4E31A6388926 /* CDVCamera.m in Sources */,
 				2B15CC0D9B0B47D99D1378C9 /* CDVJpegHeaderWriter.m in Sources */,
 				D6511BE3E4F94CE8937EFBC4 /* CDVLocation.m in Sources */,
+				B4B0C14002744FDFB823E76E /* ETSdkWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,6 +650,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+					"\"$(SRCROOT)/NibsCordova/Plugins/com.exacttarget.etpushsdk\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = NibsCordova;
@@ -626,6 +675,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+					"\"$(SRCROOT)/NibsCordova/Plugins/com.exacttarget.etpushsdk\"",
 				);
 				PRODUCT_NAME = NibsCordova;
 				TARGETED_DEVICE_FAMILY = "1,2";

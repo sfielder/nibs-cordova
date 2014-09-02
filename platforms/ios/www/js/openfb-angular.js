@@ -127,7 +127,7 @@ angular.module('openfb', [])
          */
         function logout() {
 
-            var logoutWindow = $window.open(FB_LOGOUT_URL + '?access_token=' + tokenStore['fbtoken'] + '&next=' + 'http://sfdbc.heroku.com/' +
+            var logoutWindow = window.open(FB_LOGOUT_URL + '?access_token=' + tokenStore['fbtoken'] + '&next=' + 'http://sfdbc.heroku.com/' +
                 '&display=popup', '_blank', 'location=no');
 
             setTimeout(function() {

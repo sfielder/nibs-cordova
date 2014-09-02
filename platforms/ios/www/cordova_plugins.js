@@ -90,6 +90,13 @@ module.exports = [
         "clobbers": [
             "navigator.geolocation"
         ]
+    },
+    {
+        "file": "plugins/com.exacttarget.etpushsdk/www/push.js",
+        "id": "com.exacttarget.etpushsdk.ETPush",
+        "clobbers": [
+            "ETPush"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -100,7 +107,8 @@ module.exports.metadata =
     "org.apache.cordova.device": "0.2.11",
     "org.apache.cordova.console": "0.2.10",
     "org.apache.cordova.camera": "0.3.1",
-    "org.apache.cordova.geolocation": "0.3.9"
+    "org.apache.cordova.geolocation": "0.3.9",
+    "com.exacttarget.etpushsdk": "0.1.0"
 }
 // BOTTOM OF METADATA
 });

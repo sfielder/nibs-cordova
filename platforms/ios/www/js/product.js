@@ -1,4 +1,4 @@
-angular.module('nibs.product', ['ngResource', 'openfb', 'nibs.config', 'nibs.status', 'nibs.activity', 'nibs.wishlist'])
+angular.module('nibs.product', ['ngResource', 'openfb', 'nibs.config', 'nibs.status', 'nibs.activity', 'nibs.wishlist', 'nibs.push'])
 
     .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -43,7 +43,7 @@ angular.module('nibs.product', ['ngResource', 'openfb', 'nibs.config', 'nibs.sta
 
     })
 
-    .controller('ProductDetailCtrl', function ($scope, $stateParams, $ionicPopup, Product, OpenFB, WishListItem, Activity, Status) {
+    .controller('ProductDetailCtrl', function ($scope, $rootScope, $stateParams, $ionicPopup, Product, OpenFB, WishListItem, Activity, Status, PushNotification, ET_MESSAGE_ID) {
 
         $scope.product = Product.get({productId: $stateParams.productId});
 
@@ -64,6 +64,14 @@ angular.module('nibs.product', ['ngResource', 'openfb', 'nibs.config', 'nibs.sta
             Status.show('Shared on Facebook!');
             var activity = new Activity({type: "Shared on Facebook", points: 1000, productId: $scope.product.sfid, name: $scope.product.name, image: $scope.product.image});
             activity.$save(Status.checkStatus);
+
+            var notification = new PushNotification({
+                messageId: ET_MESSAGE_ID,
+//                subscriberKeys: [$rootScope.user.email],
+                openDirect: '/app/products/' + $stateParams.productId,
+                messageText: $rootScope.user.firstname + " just shared " + $scope.product.name});
+            notification.$send();
+
 
         };
 

@@ -29,6 +29,8 @@
 #import "MainViewController.h"
 #import "SOSApplication.h"
 #import <SOS/SOSContainerViewController.h>
+#import "ETPush.h"
+#import "ETSdkWrapper.h"
 
 #import <Cordova/CDVPlugin.h>
 
@@ -100,6 +102,46 @@
     self.window.rootViewController = sosRoot;
     
     [self.window makeKeyAndVisible];
+    
+    
+    //Begin ET
+    NSBundle* mainBundle = [NSBundle mainBundle];
+    NSDictionary* ETSettings = [mainBundle objectForInfoDictionaryKey:@"ETAppSettings"];
+    BOOL useGeoLocation = [[ETSettings objectForKey:@"UseGeofences"] boolValue];
+    BOOL useAnalytics = [[ETSettings objectForKey:@"UseAnalytics"] boolValue];
+    
+#ifdef DEBUG
+    NSString* devAppID = [ETSettings objectForKey:@"ApplicationID-Dev"];
+    NSString* devAccessToken = [ETSettings objectForKey:@"AccessToken-Dev"];
+    //use your debug app id and token you setup in code.exacttarget.com here
+    [[ETPush pushManager] configureSDKWithAppID:devAppID
+                                 andAccessToken:devAccessToken,
+                                  withAnalytics:useAnalytics,
+                            andLocationServices:useGeoLocation,
+                                  andCloudPages:NO];
+#else
+    NSString* prodAppID = [ETSettings objectForKey:@"ApplicationID-Prod"];
+    NSString* prodAccessToken = [ETSettings objectForKey:@"AccessToken-Prod"];
+    
+    //use your production app id and token you setup in code.exacttarget.com here
+    [[ETPush pushManager] configureSDKWithAppID:prodAppID
+                                 andAccessToken:prodAccessToken
+                                  withAnalytics:useAnalytics
+                            andLocationServices:useGeoLocation
+                                  andCloudPages:NO];
+#endif
+    [[ETPush pushManager]
+     registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    [[ETPush pushManager] shouldDisplayAlertViewIfPushReceived:YES];
+    [[ETPush pushManager] applicationLaunchedWithOptions:launchOptions];
+    NSString* token = [[ETPush pushManager] deviceToken];
+    NSString* deviceID = [ETPush safeDeviceIdentifier];
+    NSLog(@"token %@", token);
+    NSLog(@"Device ID %@", deviceID);
+    if (useGeoLocation) {
+        [[ETLocationManager locationManager] startWatchingLocation];
+    }
+    //End ET
 
     return YES;
 }
@@ -127,7 +169,25 @@
     didReceiveLocalNotification:(UILocalNotification*)notification
 {
     // re-post ( broadcast )
+    // [[NSNotificationCenter defaultCenter] postNotificationName:CDVLocalNotification object:notification];
+    
+    //Begin ET
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:notification.userInfo
+                                                       options:0
+                                                         error:&error];
+    if (!jsonData) {
+        
+        NSLog(@"jsn error: %@", error);
+        
+    } else {
+        
+        [ETSdkWrapper.etPlugin notifyOfMessage:jsonData];
+    }
+    // re-post ( broadcast )
     [[NSNotificationCenter defaultCenter] postNotificationName:CDVLocalNotification object:notification];
+    //End ET
+    
 }
 
 - (void)                                application:(UIApplication *)application
@@ -140,6 +200,12 @@
                        stringByReplacingOccurrencesOfString: @" " withString: @""];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotification object:token];
+    
+    //Begin ET
+    [[ETPush pushManager] registerDeviceToken:deviceToken];
+    //End ET
+    
+    
 }
 
 - (void)                                 application:(UIApplication *)application
@@ -147,6 +213,11 @@
 {
     // re-post ( broadcast )
     [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotificationError object:error];
+    
+    //Begin ET
+    [[ETPush pushManager] applicationDidFailToRegisterForRemoteNotificationsWithError:error];
+    //End ET
+    
 }
 
 - (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window
@@ -161,5 +232,25 @@
 {
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
+
+
+//Begin ET
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [[ETPush pushManager] handleNotification:userInfo forApplicationState:application.applicationState];
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:userInfo
+                                                       options:0
+                                                         error:&error];
+    if (!jsonData) {
+        
+        NSLog(@"json error: %@", error);
+        
+    } else {
+        
+        [ETSdkWrapper.etPlugin notifyOfMessage:jsonData];
+    }
+}
+//End ET
+
 
 @end

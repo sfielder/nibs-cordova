@@ -37,6 +37,9 @@
     <feature name="Geolocation">
         <param name="ios-package" value="CDVLocation" />
     </feature>
+    <feature name="ETPush">
+        <param name="ios-package" value="ETSdkWrapper" />
+    </feature>
     <name>NibsCordova</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.

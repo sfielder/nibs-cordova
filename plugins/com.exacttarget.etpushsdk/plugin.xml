@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.exacttarget.etpushsdk"
+    version="0.1.0">
+    <name>ETPush</name>
+    <description>ET SDK Cordova Plugin</description>
+    <license>Apache 2.0</license>
+    <author>Jesse Boles</author>
+    <keywords>cordova,device</keywords>
+    <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git</repo>
+    <issue>https://issues.apache.org/jira/browse/CB/component/12320648</issue>
+
+    <js-module src="www/push.js" name="ETPush">
+        <clobbers target="ETPush" />
+    </js-module>
+
+<!--<preference name="DEVAPPID" />-->
+<!--<preference name="DEVACCESSTOKEN" />-->
+<!--<preference name="PRODAPPID" />-->
+<!--<preference name="PRODACCESSTOKEN" />-->
+<!--<preference name="GCMSENDERIDDEV" />-->
+<!--<preference name="GCMSENDERIDPROD" />-->
+<!--<preference name="USEGEO" />-->
+<!--<preference name="USEANALYTICS" />-->
+
+<!-- android -->
+    <platform name="android">
+        <info>
+            You need to install __Google Play Services__ from the `Android Extras` section using the Android SDK manager (run `android`).
+            
+            You need to add the following line to your `local.properties`
+            
+            android.library.reference.1=PATH_TO_ANDROID_SDK/sdk/extras/google/google_play_services/libproject/google-play-services_lib
+        </info>
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="ETPush" >
+                <param name="android-package" value="com.exacttarget.etpushsdk.ETSdkWrapper"/>
+            </feature>
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <!-- ExactTarget required permissions -->
+            <permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"
+            android:protectionLevel="signature"/>
+            <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE"/>
+            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+            <uses-permission android:name="android.permission.WAKE_LOCK"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.VIBRATE"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <!-- END ExactTarget Required Permissions -->
+            
+            <!-- ExactTarget Permissions for location and region monitoring -->
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+            <!-- END ExactTarget location and region monitoring Permissions -->
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <!-- activity that handles message reception and forwarding -->
+            <activity android:name="com.exacttarget.etpushsdk.ETPushNotificationRecipient" />
+            <!-- ET Broadcast Receiver for handling push messages. -->
+            <receiver android:name="com.exacttarget.etpushsdk.ET_GenericReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                    <category android:name="com.exacttarget.internal.orangehybrid" />
+                </intent-filter>
+            </receiver>
+            <!-- ET Broadcast Receivers for for sending data (required) -->
+            <receiver android:name="com.exacttarget.etpushsdk.ETSendDataReceiver"/>
+            
+            <!-- ET Broadcast Receivers for handling location updates -->
+            <receiver android:name="com.exacttarget.etpushsdk.location.receiver.LocationChangedReceiver"/> <!-- Get location ourselves -->
+            <receiver android:name="com.exacttarget.etpushsdk.location.receiver.PassiveLocationChangedReceiver"/> <!-- piggyback and listen in on other apps that request location updates -->
+            <receiver android:name="com.exacttarget.etpushsdk.location.receiver.PowerStateChangedReceiver"> <!-- Don't kill their battery using gps if it's low -->
+                <intent-filter>
+                    <action android:name="android.intent.action.ACTION_BATTERY_LOW"/>
+                    <action android:name="android.intent.action.ACTION_BATTERY_OKAY"/>
+                </intent-filter>
+            </receiver>
+            
+            <receiver android:name="com.exacttarget.etpushsdk.ETLocationTimeoutReceiver"/>
+            <receiver android:name="com.exacttarget.etpushsdk.ETLocationWakeupReceiver"/>
+            <receiver android:name="com.exacttarget.etpushsdk.ETGeofenceReceiver"/>
+            
+            <!-- figure out where they are if they just turned on their phone (e.g. plane trip) -->
+            <receiver android:enabled="true" android:exported="true" android:name="com.exacttarget.etpushsdk.location.receiver.BootReceiver">
+                <intent-filter>
+                    <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                </intent-filter>
+            </receiver>
+            
+            <!-- ET Service handlers for handling location updates -->
+            <service android:name="com.exacttarget.etpushsdk.ETLocationTimeoutService"/>
+            <service android:name="com.exacttarget.etpushsdk.ETLocationWakeupService"/>
+            <service android:name="com.exacttarget.etpushsdk.ETGeofenceIntentService"/>
+            
+            <!-- ET Service handlers for sending data (required) -->
+            <service android:name="com.exacttarget.etpushsdk.ETSendDataIntentService"/>
+            
+                       	<!-- ET Google Cloud Messaging Version (required to match GCM jar file) -->
+            <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+            <meta-data android:name="ETApplicationID_dev" android:value="@string/et_app_id_dev" />
+            <meta-data android:name="ETAccessToken_dev" android:value="@string/et_access_token_dev" />
+            <meta-data android:name="GCMSenderID_dev" android:value="@string/gcm_sender_id_dev" />
+            <meta-data android:name="ETApplicationID_prod" android:value="@string/et_app_id_prod" />
+            <meta-data android:name="ETAccessToken_prod" android:value="@string/et_access_token_prod" />
+            <meta-data android:name="GCMSenderID_prod" android:value="@string/gcm_sender_id_prod" />
+            </config-file>
+
+        <config-file target="res/values/strings.xml" parent="/resources">
+           <string name="et_app_id_dev">3ca982b5-d6b6-49c2-adbb-e48cbfad45b6</string>
+            <string name="et_access_token_dev">4mq77s25n9bber2jth7t9d9a</string>
+            <!--<string name="gcm_sender_id_dev">$GCMSENDERIDDEV</string>-->
+            <string name="et_app_id_prod">3ca982b5-d6b6-49c2-adbb-e48cbfad45b6</string>
+            <string name="et_access_token_prod">4mq77s25n9bber2jth7t9d9a</string>
+            <!--<string name="gcm_sender_id_prod">$GCMSENDERIDPROD</string>-->
+ 		  </config-file>
+
+        <source-file src="src/android/ETSdkWrapper.java" target-dir="src/com/exacttarget/etpushsdk" />
+        <source-file src="src/android/ETPushNotificationRecipient.java" target-dir="src/com/exacttarget/etpushsdk" />
+        <source-file src="src/android/etsdk-3.1.2.jar" target-dir="libs" />
+        <source-file src="src/android/jackson-annotations-2.2.3.jar" target-dir="libs" />
+        <source-file src="src/android/jackson-core-2.2.3.jar" target-dir="libs" />
+        <source-file src="src/android/jackson-databind-2.2.3.jar" target-dir="libs" />
+        <source-file src="src/android/joda-convert-1.5.jar" target-dir="libs" />
+        <source-file src="src/android/joda-time-2.2.jar" target-dir="libs" />
+        <source-file src="src/android/ormlite-android-4.47.jar" target-dir="libs" />
+        <source-file src="src/android/ormlite-core-4.47.jar" target-dir="libs" />
+        <source-file src="src/android/support-v4-19.1.0.jar" target-dir="libs" />
+    </platform>
+    <!-- ios -->
+    <!--<string>407dfa8f-27b9-462c-9bd1-ee105a7668d3</string>-->
+    <!--<string>6tmhn6crj6wfhnruej55rsr2</string>-->
+    <platform name="ios">
+        <config-file target="*-Info.plist" parent="ETAppSettings">
+                <dict>
+                    <key>ApplicationID-Dev</key>
+                    <string>3ca982b5-d6b6-49c2-adbb-e48cbfad45b6</string>
+                    <key>AccessToken-Dev</key>
+                    <string>4mq77s25n9bber2jth7t9d9a</string>
+                    <key>ApplicationID-Prod</key>
+                    <string>3ca982b5-d6b6-49c2-adbb-e48cbfad45b6</string>
+                    <key>AccessToken-Prod</key>
+                    <string>4mq77s25n9bber2jth7t9d9a</string>
+                    <key>UseGeofences</key>
+                    <string>true</string>
+                    <key>UseAnalytics</key>
+                    <string>true</string>
+                </dict>
+        </config-file>
+        <config-file target="config.xml" parent="/*">
+            <feature name="ETPush">
+                <param name="ios-package" value="ETSdkWrapper"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/ETSdkWrapper.h" />
+        <source-file src="src/ios/ETSdkWrapper.m" />
+        <source-file src="src/ios/etpushsdk/libetpushsdk-3.1.1.a" framework="true" />
+        <header-file src="src/ios/etpushsdk/ETLandingPagePresenter.h" />
+        <header-file src="src/ios/etpushsdk/ETLocationManager.h" />
+        <header-file src="src/ios/etpushsdk/ETPhoneHome.h" />
+        <header-file src="src/ios/etpushsdk/ETPush.h" />
+        <header-file src="src/ios/etpushsdk/ETSqliteHelper.h" />
+        <header-file src="src/ios/etpushsdk/ETURLConnection.h" />
+        <header-file src="src/ios/etpushsdk/ExactTargetEnhancedPushDataSource.h" />
+        <header-file src="src/ios/etpushsdk/FenceMessage.h" />
+        <header-file src="src/ios/etpushsdk/GenericUpdate.h" />
+        <header-file src="src/ios/etpushsdk/Geofence.h" />
+        <header-file src="src/ios/etpushsdk/KeyValueStore.h" />
+        <header-file src="src/ios/etpushsdk/LocationUpdate.h" />
+        <header-file src="src/ios/etpushsdk/Message.h" />
+        <header-file src="src/ios/etpushsdk/PushConstants.h" />
+        <header-file src="src/ios/etpushsdk/Region.h" />
+        <header-file src="src/ios/etpushsdk/Registration.h" />
+        <header-file src="src/ios/etpushsdk/StatsUpdate.h" />
+        
+        <framework src="libsqlite3.dylib" />
+
+    </platform>
+
+
+</plugin>

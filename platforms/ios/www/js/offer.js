@@ -1,4 +1,4 @@
-angular.module('nibs.offer', ['ngResource', 'openfb', 'nibs.status', 'nibs.activity', 'nibs.wallet', 'nibs.config'])
+angular.module('nibs.offer', ['ngResource', 'openfb', 'nibs.status', 'nibs.activity', 'nibs.wallet', 'nibs.push', 'nibs.config'])
 
     // Routes
     .config(function ($stateProvider) {
@@ -56,7 +56,7 @@ angular.module('nibs.offer', ['ngResource', 'openfb', 'nibs.status', 'nibs.activ
 
     })
 
-    .controller('OfferDetailCtrl', function ($scope, $state, $ionicPopup, $stateParams, Offer, OpenFB, WalletItem, Activity, Status) {
+    .controller('OfferDetailCtrl', function ($rootScope, $scope, $state, $ionicPopup, $stateParams, Offer, OpenFB, WalletItem, Activity, PushNotification, Status, ET_MESSAGE_ID) {
 
         $scope.offer = Offer.get({offerId: $stateParams.offerId});
         $scope.shareOnFacebook = function (offer) {
@@ -73,6 +73,13 @@ angular.module('nibs.offer', ['ngResource', 'openfb', 'nibs.status', 'nibs.activ
             Status.show('Shared on Facebook!');
             var activity = new Activity({type: "Shared on Facebook", points: 1000, offerId: $scope.offer.sfid, name: $scope.offer.name, image: $scope.offer.image});
             activity.$save(Status.checkStatus);
+
+            var notification = new PushNotification({
+                messageId: ET_MESSAGE_ID,
+//                subscriberKeys: [$rootScope.user.email],
+                openDirect: '/app/offers/' + $stateParams.offerId,
+                messageText: $rootScope.user.firstname + " just shared " + $scope.offer.name});
+            notification.$send();
         };
 
         $scope.shareOnTwitter = function () {

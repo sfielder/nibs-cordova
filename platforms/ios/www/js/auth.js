@@ -45,20 +45,45 @@ angular.module('nibs.auth', ['ngResource', 'openfb', 'nibs.config'])
     .factory('Auth', function ($http, $window, $rootScope, HOST) {
         return {
             login: function (user) {
-                alert("Login to " + HOST + "login with " + JSON.stringify(user));
                 return $http.post(HOST + 'login', user)
                     .success(function (data) {
                         $rootScope.user = data.user;
                         $window.localStorage.user = JSON.stringify(data.user);
                         $window.localStorage.token = data.token;
+
+                        console.log('Subscribing for Push as ' + data.user.email);
+                        ETPush.setSubscriberKey(
+                            function() {
+                                console.log('setSubscriberKey: success');
+                            },
+                            function(error) {
+                                alert('Error setting Push Notification subscriber');
+                            },
+                            data.user.email
+                        );
+
                     });
             },
             fblogin: function (fbUser) {
+                console.log(JSON.stringify(fbUser));
+                console.log(HOST);
                 return $http.post(HOST + 'fblogin', {user:fbUser, token: $window.localStorage['fbtoken']})
                     .success(function (data) {
                         $rootScope.user = data.user;
                         $window.localStorage.user = JSON.stringify(data.user);
                         $window.localStorage.token = data.token;
+
+                        console.log('Subscribing for Push as ' + data.user.email);
+                        ETPush.setSubscriberKey(
+                            function() {
+                                console.log('setSubscriberKey: success');
+                            },
+                            function(error) {
+                                alert('Error setting Push Notification subscriber');
+                            },
+                            data.user.email
+                        );
+
                     });
             },
             logout: function () {
@@ -107,6 +132,7 @@ angular.module('nibs.auth', ['ngResource', 'openfb', 'nibs.config'])
                                     });
                                 })
                                 .error(function (err) {
+                                    console.log(JSON.stringify(err));
                                     $ionicPopup.alert({title: 'Oops', content: err});
                                 })
                         })
