@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		0FB0910219B0FADB00A5929C /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB0910119B0FADB00A5929C /* libicucore.dylib */; };
 		0FB0910519B0FBC500A5929C /* SOSApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB0910419B0FBC500A5929C /* SOSApplication.m */; };
@@ -168,6 +169,7 @@
 		F23177DA65B5449389A72E3F /* CDVInAppBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVInAppBrowser.h; path = org.apache.cordova.inappbrowser/CDVInAppBrowser.h; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = NibsCordova/config.xml; sourceTree = "<group>"; };
 		F8EB88D70A1943FFA06D287F /* libPods-NibsCordova.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NibsCordova.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB3258D619B6A90D0067DF9E /* CDVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVViewController.h; path = CordovaLib/Classes/CDVViewController.h; sourceTree = "<group>"; };
 		FC9E9CD6E96847909E6783DC /* CDVDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVDevice.m; path = org.apache.cordova.device/CDVDevice.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -235,6 +237,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				FB3258D319B6A8D60067DF9E /* Dependent Headers */,
 				EB87FDF41871DAF40020F90C /* config.xml */,
 				EB87FDF31871DA8E0020F90C /* www */,
 				EB87FDF21871DA7A0020F90C /* merges */,
@@ -409,6 +412,14 @@
 				301BF56E109A69640062928A /* www */,
 			);
 			name = Staging;
+			sourceTree = "<group>";
+		};
+		FB3258D319B6A8D60067DF9E /* Dependent Headers */ = {
+			isa = PBXGroup;
+			children = (
+				FB3258D619B6A90D0067DF9E /* CDVViewController.h */,
+			);
+			name = "Dependent Headers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -652,10 +663,9 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 					"\"$(SRCROOT)/NibsCordova/Plugins/com.exacttarget.etpushsdk\"",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = NibsCordova;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(OBJROOT)/UninstalledProducts/include\"";
 			};
 			name = Debug;
 		};
@@ -665,6 +675,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = armv7;
+				"ARCHS[sdk=*]" = armv7;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -680,7 +691,6 @@
 				);
 				PRODUCT_NAME = NibsCordova;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(OBJROOT)/UninstalledProducts/include\"";
 			};
 			name = Release;
 		};
@@ -709,10 +719,11 @@
 					"\"$(BUILT_PRODUCTS_DIR)\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "\"$(OBJROOT)/UninstalledProducts/include\"";
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -741,9 +752,11 @@
 					"\"$(BUILT_PRODUCTS_DIR)\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
-				USER_HEADER_SEARCH_PATHS = "";
+				USER_HEADER_SEARCH_PATHS = "\"$(OBJROOT)/UninstalledProducts/include\"";
+				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
