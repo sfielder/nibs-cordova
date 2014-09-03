@@ -9,7 +9,7 @@ angular.module('nibs.config', [])
     .constant('ET_MESSAGE_ID', 'MzoxMTQ6MA') //prod
 
     // SSO Initialization URL from the defined Auth Provider
-    .constant('CHATTER_SSO', 'https://login.salesforce.com/services/auth/sso/00Di0000000k8FREAY/Nibs')
+    .constant('CHATTER_SSO', 'https://login.salesforce.com/services/auth/sso/00Di0000000k8FREAY/RealNibs')
 
     .constant('STATUS_LABELS', [
         'Forastero',

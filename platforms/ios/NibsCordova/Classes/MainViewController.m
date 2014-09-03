@@ -72,6 +72,11 @@
     self.webView.scrollView.delegate = self;
 }
 
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    NSLog(@"[WebView] %@", request);
+    return [super webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.webView.scrollView setContentOffset:CGPointMake(0, 0)];

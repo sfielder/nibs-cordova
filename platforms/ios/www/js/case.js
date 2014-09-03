@@ -37,7 +37,6 @@ angular.module('nibs.case', ['ngResource', 'nibs.config'])
 
         $scope.sos = function() {
             User.get(function(user) {
-                alert(JSON.stringify(user));
                 // Available via SOS cordova plugin
                 window.SalesforceSOS(user.email);
             });
