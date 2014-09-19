@@ -56,8 +56,6 @@
 #endif
     [NSURLCache setSharedURLCache:sharedCache];
 
-    [[SOSApplication sharedInstance] setup];
-    
     self = [super init];
     return self;
 }
