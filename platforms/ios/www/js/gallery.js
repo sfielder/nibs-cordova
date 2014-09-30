@@ -1,4 +1,4 @@
-angular.module('nibs.gallery', ['ngResource', 'nibs.s3uploader', 'nibs.config'])
+angular.module('nibs.gallery', ['nibs.s3uploader'])
 
     // Routes
     .config(function ($stateProvider) {
@@ -17,15 +17,27 @@ angular.module('nibs.gallery', ['ngResource', 'nibs.s3uploader', 'nibs.config'])
 
     })
 
-    // Resources
-    .factory('Picture', function ($resource, HOST) {
-        return $resource(HOST + 'pictures/:id');
+    // Services
+    .factory('Picture', function ($http, $rootScope) {
+        return {
+            all: function() {
+                return $http.get($rootScope.server.url + '/pictures');
+            },
+            create: function(picture) {
+                return $http.post($rootScope.server.url + '/pictures', picture);
+            },
+            deleteAll: function(pictureId) {
+                return $http.delete($rootScope.server.url + '/pictures');
+            }
+        };
     })
 
     //Controllers
     .controller('GalleryCtrl', function ($scope, $rootScope, $ionicPopup, Picture, S3Uploader) {
 
-        $scope.pictures = Picture.query();
+        Picture.all().success(function(pictures) {
+            $scope.pictures = pictures;
+        });
 
         $scope.takePicture = function (from) {
 
@@ -56,8 +68,7 @@ angular.module('nibs.gallery', ['ngResource', 'nibs.s3uploader', 'nibs.config'])
                         fileName = new Date().getTime() + ".jpg";
                         S3Uploader.upload(imageURI, fileName).then(function () {
                             var p = {url: 'https://s3-us-west-1.amazonaws.com/sfdc-demo/' + fileName};
-                            var pic = new Picture(p);
-                            pic.$save(pic);
+                            Picture.create(p);
                             $scope.pictures.push(p);
                         });
                     });

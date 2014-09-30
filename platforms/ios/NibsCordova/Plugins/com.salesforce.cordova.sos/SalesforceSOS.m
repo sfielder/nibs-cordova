@@ -7,7 +7,7 @@
      if (command.arguments.count > 0) {
          [SOSApplication sharedInstance].email = [command.arguments objectAtIndex:0];
      }
-     [[SOSApplication sharedInstance] startSession];
+     [[SOSApplication sharedInstance] startSession:nil];
  }
 
  @end

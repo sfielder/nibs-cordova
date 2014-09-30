@@ -10,7 +10,7 @@
 
         <platform name="ios">
             <js-module src="www/sos.js" name="sos">
-                <clobbers target="window.sos" />
+                <clobbers target="window.SalesforceSOS" />
             </js-module>
 
             <config-file target="config.xml" parent="/*">

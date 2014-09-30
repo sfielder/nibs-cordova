@@ -282,6 +282,47 @@ a {
     color: #fff;
 }
 
+
+.button-status,
+{
+    border-color: #73732E;
+    background-color: #73732E;
+    background-image: none;
+    color: #fff;
+}
+
+.button-status1,
+.button-status1:hover,
+.button-status1:active {
+    background-color: #73732E;
+    color: #fff;
+}
+
+.button-status2,
+.button-status2:hover,
+.button-status2:active {
+    border-color: #A87E21;
+    background-color: #A87E21;
+    background-image: none;
+    color: #fff;
+}
+
+.button-status3,
+.button-status3:hover,
+.button-status3:active {
+    border-color: #802E13;
+    background-color: #802E13;
+    background-image: none;
+    color: #fff;
+}
+
+.button-status1:hover,
+.button-status2:hover,
+.button-status3:hover
+{
+    opacity: .9;
+}
+
 .profile-level {
     font-family: "Source Sans" !important;
     font-size: 1.4rem !important;
@@ -441,11 +482,6 @@ a {
     margin: 4px;
 }
 
-.menu .list .item {
-    padding-top: 13px;
-    padding-bottom: 13px;
-}
-
 .hourglass {
     position: absolute;
     font-size: 44px;
@@ -468,3 +504,14 @@ a {
     font-size: 1rem;
     color: rgba(6,6,6,.2);
 }
+
+.menu,
+.menu .item-content {
+    background-color: #69625A;
+}
+
+.menu .item-content {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+

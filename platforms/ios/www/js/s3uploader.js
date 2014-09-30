@@ -1,8 +1,8 @@
-angular.module('nibs.s3uploader', ['ngResource', 'nibs.config'])
+angular.module('nibs.s3uploader', [])
 
-    .factory('S3Uploader', function ($q, $window, $http, $ionicPopup, HOST) {
+    .factory('S3Uploader', function ($q, $window, $http, $ionicPopup, $rootScope) {
 
-        var signingURI = HOST + "s3signing";
+        var signingURI = $rootScope.server.url + "/s3signing";
 
         function upload(imageURI, fileName) {
 

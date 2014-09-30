@@ -1,7 +1,9 @@
-angular.module('nibs.push', ['ngResource', 'nibs.config'])
+angular.module('nibs.push', [])
 
-    .factory('PushNotification', function ($resource, HOST) {
-        return $resource(HOST + 'notifications', null, {
-                'send': {method:'POST'}
-            });
+    .factory('PushNotification', function ($http, $rootScope) {
+        return {
+            send: function(notification) {
+                return $http.post($rootScope.server.url + '/notifications/', notification);
+            }
+        };
     });

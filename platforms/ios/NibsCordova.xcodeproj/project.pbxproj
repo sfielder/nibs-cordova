@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0FB0910219B0FADB00A5929C /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB0910119B0FADB00A5929C /* libicucore.dylib */; };
 		0FB0910519B0FBC500A5929C /* SOSApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB0910419B0FBC500A5929C /* SOSApplication.m */; };
@@ -51,10 +50,10 @@
 		8E3B9FF2A72B4E31A6388926 /* CDVCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9A67540C64431BA88446DB /* CDVCamera.m */; };
 		A455364DA27245D8AAA4C001 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = FC9E9CD6E96847909E6783DC /* CDVDevice.m */; };
 		B4B0C14002744FDFB823E76E /* ETSdkWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93658D2D70FC432781B3BFB9 /* ETSdkWrapper.m */; };
-		B7739E4928D44A98AFFAE387 /* SOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 741B367E2EAE44EEB4DD2703 /* SOS.framework */; };
 		D35890DE854D4DEC8A9C795B /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 85A112F9B40140BAA9A13291 /* CDVLogger.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		D6511BE3E4F94CE8937EFBC4 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = E14EF2193C714B9889946F7D /* CDVLocation.m */; };
+		785BB83E13EF4490BC643CC4 /* SOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4D6C105878E4240A34F4537 /* SOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,7 +126,6 @@
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		61F09F2D63174A0186712F28 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Message.h; path = com.exacttarget.etpushsdk/Message.h; sourceTree = "<group>"; };
 		723C2CC8E6B24CE0926A2386 /* ExactTargetEnhancedPushDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExactTargetEnhancedPushDataSource.h; path = com.exacttarget.etpushsdk/ExactTargetEnhancedPushDataSource.h; sourceTree = "<group>"; };
-		741B367E2EAE44EEB4DD2703 /* SOS.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = SOS.framework; path = System/Library/Frameworks/SOS.framework; sourceTree = SDKROOT; };
 		772C16DD04F94F1B8C519677 /* PushConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushConstants.h; path = com.exacttarget.etpushsdk/PushConstants.h; sourceTree = "<group>"; };
 		77FEE29090434B2E8A5E068E /* CDVJpegHeaderWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVJpegHeaderWriter.h; path = org.apache.cordova.camera/CDVJpegHeaderWriter.h; sourceTree = "<group>"; };
 		792F529F03884CBC991D1230 /* ImageIO.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -171,6 +169,7 @@
 		F8EB88D70A1943FFA06D287F /* libPods-NibsCordova.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NibsCordova.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB3258D619B6A90D0067DF9E /* CDVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVViewController.h; path = CordovaLib/Classes/CDVViewController.h; sourceTree = "<group>"; };
 		FC9E9CD6E96847909E6783DC /* CDVDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVDevice.m; path = org.apache.cordova.device/CDVDevice.m; sourceTree = "<group>"; };
+		C4D6C105878E4240A34F4537 /* SOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "SOS.framework"; path = "System/Library/Frameworks/SOS.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,10 +184,10 @@
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */,
 				682F2182804040B2974B0847 /* libPods-NibsCordova.a in Frameworks */,
-				B7739E4928D44A98AFFAE387 /* SOS.framework in Frameworks */,
 				3FF5917DB8B04C5984035C41 /* ImageIO.framework in Frameworks */,
 				44703B6AFB8A4F81995CED48 /* libetpushsdk-3.1.1.a in Frameworks */,
 				5B0A3185B5404777997860E9 /* libsqlite3.dylib in Frameworks */,
+				785BB83E13EF4490BC643CC4 /* SOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,10 +295,10 @@
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
 				F8EB88D70A1943FFA06D287F /* libPods-NibsCordova.a */,
-				741B367E2EAE44EEB4DD2703 /* SOS.framework */,
 				792F529F03884CBC991D1230 /* ImageIO.framework */,
 				836FC05D7A564A53B040DC40 /* libetpushsdk-3.1.1.a */,
 				368E1B0BEC58411590AB25E2 /* libsqlite3.dylib */,
+				C4D6C105878E4240A34F4537 /* SOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

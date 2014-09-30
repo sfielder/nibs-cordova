@@ -1,4 +1,4 @@
-angular.module('nibs.wallet', ['ngResource', 'nibs.config'])
+angular.module('nibs.wallet', [])
 
     // Routes
     .config(function ($stateProvider) {
@@ -17,21 +17,36 @@ angular.module('nibs.wallet', ['ngResource', 'nibs.config'])
 
     })
 
-    // Resources
-    .factory('WalletItem', function ($resource, HOST) {
-        return $resource(HOST + 'wallet/:id');
+    // Services
+    .factory('WalletItem', function ($http, $rootScope) {
+        return {
+            all: function() {
+                return $http.get($rootScope.server.url + '/wallet');
+            },
+            create: function(walletItem) {
+                return $http.post($rootScope.server.url + '/wallet', walletItem);
+            },
+            del: function(offerId) {
+                return $http.delete($rootScope.server.url + '/wallet/' + offerId);
+            }
+        };
     })
-
 
     //Controllers
     .controller('WalletCtrl', function ($scope, WalletItem) {
 
-        $scope.walletItems = WalletItem.query();
+        function all() {
+            WalletItem.all().success(function(walletItems) {
+                $scope.walletItems = walletItems;
+            });
+        }
 
         $scope.deleteItem = function(offer) {
-            offer.$delete({id: offer.id}, function() {
-                $scope.walletItems = WalletItem.query();
+            WalletItem.del(offer.id).success(function() {
+                all();
             });
         };
 
-    })
+        all();
+
+    });

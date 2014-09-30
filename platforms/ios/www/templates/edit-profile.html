@@ -15,10 +15,10 @@
 
         <div ng-if="panel===1">
             <div class="padding">
-                <img class="profile-pic light-border" ng-src="{{user.pictureurl}}"/>
+                <img class="profile-pic light-border" ng-src="{{user.pictureurl}}" style="float: left;margin-right:8px;margin-bottom:8px;"/>
                 <div>
-                    <button class="button icon ion-ios7-camera button-light" ng-click="addPicture()" style="width: 68px;"></button>
-                    <button class="button icon ion-ios7-photos button-light" ng-click="addPicture('LIBRARY')" style="width: 68px;"></button>
+                    <button class="button icon ion-ios7-camera button-light" ng-click="addPicture()" style="width: 68px;"></button><br/>
+                    <button class="button icon ion-ios7-photos button-light" ng-click="addPicture('LIBRARY')" style="width: 68px;margin-top: 4px;"></button>
                 </div>
             </div>
             <form class="list list-inset" style="clear: both;margin-top: 0">
@@ -38,6 +38,15 @@
                     <span class="input-label">Mobile Phone</span>
                     <input type="text" ng-model="user.mobilephone" />
                 </label>
+                <li class="item item-toggle">
+                    See Premium Offers
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <div class="track">
+                            <div class="handle"></div>
+                        </div>
+                    </label>
+                </li>
             </form>
         </div>
 

@@ -94,7 +94,7 @@
  *
  * Instead; let's add a check for the session state, and then prompt the user to cancel the session.
  */
-- (void)startSession {
+- (void)startSession:(NSString*)userEmail {
   SOSSessionManager *sos = [SOSSessionManager sharedInstance];
   if ([sos state] != SOSSessionStateInactive) {
     // We're either connecting, or are in a session already.
@@ -106,6 +106,8 @@
   }
 
   SOSOptions *opts = [self getSessionOptions];
+    opts.email = userEmail;
+    
   [sos startSessionWithOptions:opts completion:^(NSError *error, SOSSessionManager *sos) {
     if (error) {
       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"

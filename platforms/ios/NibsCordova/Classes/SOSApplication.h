@@ -52,7 +52,7 @@
 /**
  *  Start a session
  */
-- (void)startSession;
+- (void)startSession:(NSString*)userEmail;
 
 /**
  *  <#Description#>

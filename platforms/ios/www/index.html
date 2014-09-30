@@ -18,19 +18,14 @@
 <script>
     function onNotification(str) {
         var message = JSON.parse(str);
-        console.log('got message...');
-        console.log(message);
-        console.log(message._od);
         if (message._od) {
             window.location.hash = message._od;
         }
     }
 </script>
 
-
 <script src="cordova.js"></script>
 <script src="lib/js/ionic.bundle.js"></script>
-<script src="lib/js/angular/angular-resource.min.js"></script>
 <script src="lib/js/angular/angular-sanitize.min.js"></script>
 <script src="js/openfb-angular.js"></script>
 
@@ -39,6 +34,7 @@
 <script src="js/auth.js"></script>
 <script src="js/s3uploader.js"></script>
 <script src="js/profile.js"></script>
+<script src="js/journeybuilder.js"></script>
 <script src="js/offer.js"></script>
 <script src="js/product.js"></script>
 <script src="js/status.js"></script>
@@ -49,7 +45,6 @@
 <script src="js/gallery.js"></script>
 <script src="js/settings.js"></script>
 <script src="js/case.js"></script>
-<script src="js/message.js"></script>
 <script src="js/push.js"></script>
 <script src="js/chatter.js"></script>
 <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>

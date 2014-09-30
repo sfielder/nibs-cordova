@@ -26,6 +26,7 @@
 //
 
 #import "MainViewController.h"
+#import "SOSApplication.h"
 
 @implementation MainViewController
 
@@ -74,12 +75,26 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSLog(@"[WebView] %@", request);
+    if ([request.URL.absoluteString hasPrefix:@"sos:"]) {
+        NSString *email = [NSString stringWithFormat:@"%@@%@", request.URL.user, request.URL.host];
+        [[SOSApplication sharedInstance] startSession:email];
+        return NO;
+    }
     return [super webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
 }
 
+- (void) webView:(UIWebView*)theWebView didFailLoadWithError:(NSError*)error
+{
+    NSLog(@"[WebView error] %@", error);
+    return [super webView:theWebView didFailLoadWithError:error];
+}
+
+
 - (void)viewDidAppear:(BOOL)animated {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // Christ. Don't ask me what this does or how it works. --scott
         [self.webView.scrollView setContentOffset:CGPointMake(0, 0)];
+        self.webView.scrollView.contentInset = UIEdgeInsetsMake(0, 0, -20, 0);
     });
 }
 
@@ -92,6 +107,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"View height: %f", self.view.frame.size.height);
+    CGRect r = self.view.frame;
+    self.view.frame = CGRectMake(r.origin.x, r.origin.y, r.size.width, r.size.height + 50);
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -134,11 +152,6 @@
 - (void) webViewDidStartLoad:(UIWebView*)theWebView
 {
     return [super webViewDidStartLoad:theWebView];
-}
-
-- (void) webView:(UIWebView*)theWebView didFailLoadWithError:(NSError*)error
-{
-    return [super webView:theWebView didFailLoadWithError:error];
 }
 
 - (BOOL) webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType

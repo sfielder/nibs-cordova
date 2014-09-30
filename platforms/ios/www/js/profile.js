@@ -1,4 +1,4 @@
-angular.module('nibs.profile', ['ngResource', 'nibs.s3uploader', 'nibs.config', 'nibs.status'])
+angular.module('nibs.profile', ['nibs.s3uploader', 'nibs.config', 'nibs.status'])
 
     // Routes
     .config(function ($stateProvider) {
@@ -27,13 +27,22 @@ angular.module('nibs.profile', ['ngResource', 'nibs.s3uploader', 'nibs.config', 
 
     })
 
-    // Resources
-    .factory('User', function ($resource, HOST) {
-        console.log('****' + HOST);
-        return $resource(HOST + 'users/me', null, {
-                'get':      {method:'GET'},
-                'update':   {method:'PUT'}}
-        );
+    // Services
+    .factory('User', function ($http, $rootScope) {
+        return {
+            get: function () {
+                return $http.get($rootScope.server.url + '/users/me', null)
+            },
+
+            update: function (user) {
+                return $http.put($rootScope.server.url + '/users/me', user)
+            }
+        };
+
+//        return $resource($rootScope.server.url + '/users/me', {serverURL: $rootScope.server.url}, {
+//                'get':      {method:'GET'},
+//                'update':   {method:'PUT'}}
+//        );
     })
 
     .factory('Preference', function() {
@@ -70,7 +79,8 @@ angular.module('nibs.profile', ['ngResource', 'nibs.s3uploader', 'nibs.config', 
     //Controllers
     .controller('ProfileCtrl', function ($rootScope, $scope, $state, User, STATUS_LABELS, STATUS_DESCRIPTIONS) {
 
-        $rootScope.user = User.get(function(user) {
+        User.get().success(function(user) {
+            $rootScope.user = user;
             $scope.statusLabel = STATUS_LABELS[user.status - 1];
             $scope.statusDescription = STATUS_DESCRIPTIONS[user.status - 1];
         });
@@ -97,17 +107,18 @@ angular.module('nibs.profile', ['ngResource', 'nibs.s3uploader', 'nibs.config', 
 
     .controller('EditProfileCtrl', function ($scope, $window, $ionicPopup, S3Uploader, User, Preference, Size, Status) {
 
-        $scope.user = User.get();
+        User.get().success(function(user) {
+            $scope.user = user;
+        });
         $scope.preferences = Preference.all();
         $scope.sizes = Size.all();
 
         $scope.panel = 1;
 
         $scope.update = function () {
-            Status.show('Your profile has been saved.');
-//            $scope.user.$update(function() {
-//                $ionicPopup.alert({title: 'Nibs', content: 'Your profile has been saved.'});
-//            });
+            User.update($scope.user).success(function() {
+                Status.show('Your profile has been saved.');
+            })
         };
 
         $scope.addPicture = function (from) {

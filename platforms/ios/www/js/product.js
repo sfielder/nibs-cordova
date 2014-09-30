@@ -1,4 +1,4 @@
-angular.module('nibs.product', ['ngResource', 'openfb', 'nibs.config', 'nibs.status', 'nibs.activity', 'nibs.wishlist', 'nibs.push'])
+angular.module('nibs.product', ['openfb', 'nibs.status', 'nibs.activity', 'nibs.wishlist', 'nibs.push'])
 
     .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -27,16 +27,26 @@ angular.module('nibs.product', ['ngResource', 'openfb', 'nibs.config', 'nibs.sta
     })
 
     // REST resource for access to Products data
-    .factory('Product', function ($resource, HOST) {
-        return $resource(HOST + 'products/:productId');
+    .factory('Product', function ($http, $rootScope) {
+        return {
+            all: function() {
+                return $http.get($rootScope.server.url + '/products');
+            },
+            get: function(productId) {
+                return $http.get($rootScope.server.url + '/products/' + productId);
+            }
+        };
     })
 
     .controller('ProductListCtrl', function ($scope, Product, OpenFB) {
 
-        $scope.products = Product.query();
+        Product.all().success(function(products) {
+            $scope.products = products;
+        });
 
         $scope.doRefresh = function() {
-            $scope.products = Product.query(function() {
+            Product.all().success(function(products) {
+                $scope.products = products;
                 $scope.$broadcast('scroll.refreshComplete');
             });
         }
@@ -45,7 +55,9 @@ angular.module('nibs.product', ['ngResource', 'openfb', 'nibs.config', 'nibs.sta
 
     .controller('ProductDetailCtrl', function ($scope, $rootScope, $stateParams, $ionicPopup, Product, OpenFB, WishListItem, Activity, Status, PushNotification, ET_MESSAGE_ID) {
 
-        $scope.product = Product.get({productId: $stateParams.productId});
+        Product.get($stateParams.productId).success(function(product) {
+            $scope.product = product;
+        });
 
         $scope.shareOnFacebook = function () {
 // Uncomment the lines below to support enable the actual Facebook posting.
@@ -62,37 +74,41 @@ angular.module('nibs.product', ['ngResource', 'openfb', 'nibs.config', 'nibs.sta
 
             // Fake Facebook posting
             Status.show('Shared on Facebook!');
-            var activity = new Activity({type: "Shared on Facebook", points: 1000, productId: $scope.product.sfid, name: $scope.product.name, image: $scope.product.image});
-            activity.$save(Status.checkStatus);
+            Activity.create({type: "Shared on Facebook", points: 1000, productId: $scope.product.sfid, name: $scope.product.name, image: $scope.product.image})
+                .success(function(status) {
+                    Status.checkStatus(status);
+                });
 
-            var notification = new PushNotification({
+            PushNotification.send({
                 messageId: ET_MESSAGE_ID,
-//                subscriberKeys: [$rootScope.user.email],
+                // subscriberKeys: [$rootScope.user.email],
                 openDirect: '/app/products/' + $stateParams.productId,
                 messageText: $rootScope.user.firstname + " just shared " + $scope.product.name});
-            notification.$send();
-
-
         };
 
         $scope.shareOnTwitter = function () {
             Status.show('Shared on Twitter!');
-            var activity = new Activity({type: "Shared on Twitter", points: 1000, productId: $scope.product.sfid, name: $scope.product.name, image: $scope.product.image});
-            activity.$save(Status.checkStatus);
+            Activity.create({type: "Shared on Twitter", points: 1000, productId: $scope.product.sfid, name: $scope.product.name, image: $scope.product.image})
+                .success(function(status) {
+                    Status.checkStatus(status);
+                });
         };
 
         $scope.shareOnGoogle = function () {
             Status.show('Shared on Google+!');
-            var activity = new Activity({type: "Shared on Google+", points: 1000, productId: $scope.product.sfid, name: $scope.product.name, image: $scope.product.image});
-            activity.$save(Status.checkStatus);
+            Activity.create({type: "Shared on Google+", points: 1000, productId: $scope.product.sfid, name: $scope.product.name, image: $scope.product.image})
+                .success(function(status) {
+                    Status.checkStatus(status);
+                });
         };
 
         $scope.saveToWishList = function () {
-            var item = new WishListItem({productId: $scope.product.id});
-            item.$save(function() {
+            WishListItem.create({productId: $scope.product.id}).success(function(status) {
                 Status.show('Added to your wish list!');
-                var activity = new Activity({type: "Saved to Wish List", points: 1000, productId: $scope.product.sfid, name: $scope.product.name, image: $scope.product.image});
-                activity.$save(Status.checkStatus);
+                Activity.create({type: "Added to Wish List", points: 1000, productId: $scope.product.sfid, name: $scope.product.name, image: $scope.product.image})
+                    .success(function(status) {
+                        Status.checkStatus(status);
+                    });
             });
         };
 

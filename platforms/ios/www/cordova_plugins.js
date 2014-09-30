@@ -11,7 +11,7 @@ module.exports = [
         "file": "plugins/com.salesforce.cordova.sos/www/sos.js",
         "id": "com.salesforce.cordova.sos.sos",
         "clobbers": [
-            "window.sos"
+            "window.SalesforceSOS"
         ]
     },
     {

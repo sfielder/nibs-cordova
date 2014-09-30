@@ -1,4 +1,4 @@
-angular.module('nibs.store-locator', ['ngResource', 'nibs.config'])
+angular.module('nibs.store-locator', [])
 
     // Routes
     .config(function ($stateProvider) {
@@ -17,9 +17,13 @@ angular.module('nibs.store-locator', ['ngResource', 'nibs.config'])
 
     })
 
-    // Resources
-    .factory('Store', function ($resource, HOST) {
-        return $resource(HOST + 'stores/:id');
+    // Services
+    .factory('Store', function ($http, $rootScope) {
+        return {
+            all: function() {
+                return $http.get($rootScope.server.url + '/stores');
+            }
+        };
     })
 
     //Controllers
@@ -38,9 +42,10 @@ angular.module('nibs.store-locator', ['ngResource', 'nibs.config'])
                 popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
 
-        $scope.stores = Store.query(function() {
-            for (var i=0; i<$scope.stores.length; i++) {
-                var store = $scope.stores[i];
+        Store.all().success(function(stores) {
+            $scope.stores = stores;
+            for (var i=0; i<stores.length; i++) {
+                var store = stores[i];
                 L.marker([store.latitude, store.longitude], {icon: icon}).addTo(map);
             }
         });
@@ -66,7 +71,7 @@ angular.module('nibs.store-locator', ['ngResource', 'nibs.config'])
 
         $scope.showLocation = function(position) {
             map.panTo(position);
-        }
+        };
 
         function onLocationFound(e) {
             var pos = e.latlng;

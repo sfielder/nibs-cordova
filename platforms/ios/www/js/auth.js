@@ -1,4 +1,4 @@
-angular.module('nibs.auth', ['ngResource', 'openfb', 'nibs.config'])
+angular.module('nibs.auth', ['openfb', 'nibs.config'])
 
     /*
      * Routes
@@ -42,58 +42,64 @@ angular.module('nibs.auth', ['ngResource', 'openfb', 'nibs.config'])
     /*
      * REST Resources
      */
-    .factory('Auth', function ($http, $window, $rootScope, HOST) {
+    .factory('Auth', function ($http, $window, $rootScope) {
+
         return {
             login: function (user) {
-                return $http.post(HOST + 'login', user)
+                return $http.post($rootScope.server.url + '/login', user)
                     .success(function (data) {
                         $rootScope.user = data.user;
                         $window.localStorage.user = JSON.stringify(data.user);
                         $window.localStorage.token = data.token;
 
                         console.log('Subscribing for Push as ' + data.user.email);
-                        ETPush.setSubscriberKey(
-                            function() {
-                                console.log('setSubscriberKey: success');
-                            },
-                            function(error) {
-                                alert('Error setting Push Notification subscriber');
-                            },
-                            data.user.email
-                        );
+                        if (typeof(ETPush) != "undefined") {
+                            ETPush.setSubscriberKey(
+                                function() {
+                                    console.log('setSubscriberKey: success');
+                                },
+                                function(error) {
+                                    alert('Error setting Push Notification subscriber');
+                                },
+                                data.user.email
+                            );
+                        }
 
                     });
             },
             fblogin: function (fbUser) {
                 console.log(JSON.stringify(fbUser));
-                console.log(HOST);
-                return $http.post(HOST + 'fblogin', {user:fbUser, token: $window.localStorage['fbtoken']})
+                return $http.post($rootScope.server.url + '/fblogin', {user:fbUser, token: $window.localStorage['fbtoken']})
                     .success(function (data) {
                         $rootScope.user = data.user;
                         $window.localStorage.user = JSON.stringify(data.user);
                         $window.localStorage.token = data.token;
 
                         console.log('Subscribing for Push as ' + data.user.email);
-                        ETPush.setSubscriberKey(
-                            function() {
-                                console.log('setSubscriberKey: success');
-                            },
-                            function(error) {
-                                alert('Error setting Push Notification subscriber');
-                            },
-                            data.user.email
-                        );
+                        if (typeof(ETPush) != "undefined") {
+                            ETPush.setSubscriberKey(
+                                function() {
+                                    console.log('setSubscriberKey: success');
+                                },
+                                function(error) {
+                                    alert('Error setting Push Notification subscriber');
+                                },
+                                data.user.email
+                            );
+                        }
 
                     });
             },
             logout: function () {
                 $rootScope.user = undefined;
-                var promise = $http.post(HOST + 'logout');
-                $window.localStorage.clear();
+                var promise = $http.post($rootScope.server.url + '/logout');
+//                $window.localStorage.clear();
+                $window.localStorage.removeItem('user');
+                $window.localStorage.removeItem('token');
                 return promise;
             },
             signup: function (user) {
-                return $http.post(HOST + 'signup', user);
+                return $http.post($rootScope.server.url + '/signup', user);
             }
         }
     })
@@ -101,9 +107,24 @@ angular.module('nibs.auth', ['ngResource', 'openfb', 'nibs.config'])
     /*
      * Controllers
      */
-    .controller('LoginCtrl', function ($scope, $state, $window, $location, $ionicViewService, $ionicPopup, Auth, OpenFB) {
+    .controller('LoginCtrl', function ($scope, $rootScope, $state, $window, $location, $ionicViewService, $ionicPopup, $ionicModal, Auth, OpenFB) {
 
-        $window.localStorage.clear();
+        $ionicModal.fromTemplateUrl('templates/server-url-setting.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
+        $scope.openAppDialog = function() {
+            $scope.modal.show();
+        };
+
+        $scope.$on('modal.hidden', function(event) {
+            $window.localStorage.setItem('serverURL', $rootScope.server.url);
+        });
+
+        $window.localStorage.removeItem('user');
+        $window.localStorage.removeItem('token');
 
         $scope.user = {};
 
@@ -150,7 +171,9 @@ angular.module('nibs.auth', ['ngResource', 'openfb', 'nibs.config'])
     .controller('LogoutCtrl', function ($rootScope, $window) {
         console.log("Logout");
         $rootScope.user = null;
-        $window.localStorage.clear();
+//        $window.localStorage.clear();
+        $window.localStorage.removeItem('user');
+        $window.localStorage.removeItem('token');
 
     })
 

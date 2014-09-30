@@ -1,4 +1,4 @@
-angular.module('nibs.activity', ['ngResource', 'nibs.config'])
+angular.module('nibs.activity', [])
 
     // Routes
     .config(function ($stateProvider) {
@@ -17,21 +17,33 @@ angular.module('nibs.activity', ['ngResource', 'nibs.config'])
 
     })
 
-    // Resources
-    .factory('Activity', function ($resource, HOST) {
-        return $resource(HOST + 'activities/:activityId');
+    // Services
+    .factory('Activity', function ($http, $rootScope) {
+        return {
+            all: function() {
+                return $http.get($rootScope.server.url + '/activities');
+            },
+            create: function(activity) {
+                return $http.post($rootScope.server.url + '/activities/', activity);
+            },
+            deleteAll: function() {
+                return $http.delete($rootScope.server.url + '/activities');
+            }
+        };
     })
-
 
     //Controllers
     .controller('ActivityCtrl', function ($scope, $state, Activity) {
-        $scope.activities = Activity.query();
+        Activity.all().success(function(activities) {
+            $scope.activities = activities
+        });
 
         $scope.doRefresh = function() {
-            $scope.activities = Activity.query(function() {
+            Activity.all().success(function(activities) {
+                $scope.activities = activities;
                 $scope.$broadcast('scroll.refreshComplete');
             });
-        }
+        };
 
         $scope.popupDialog = function() {
 
@@ -49,6 +61,6 @@ angular.module('nibs.activity', ['ngResource', 'nibs.config'])
                 $state.go('app.messages');
             }
 
-        }
+        };
 
     });

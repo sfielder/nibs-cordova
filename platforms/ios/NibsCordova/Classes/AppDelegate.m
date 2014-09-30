@@ -98,6 +98,7 @@
     [application setStatusBarHidden:NO];
     
     SOSContainerViewController *sosRoot = [[SOSContainerViewController alloc] initWithViewController:navController];
+    self.viewController.view.backgroundColor = [UIColor redColor];
     
     self.window.rootViewController = sosRoot;
     

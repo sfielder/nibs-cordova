@@ -1,4 +1,4 @@
-angular.module('nibs.status', ['nibs.config'])
+angular.module('nibs.status', [])
 
     .factory('Status', function ($rootScope, $ionicPopup, STATUS_LABELS) {
 
